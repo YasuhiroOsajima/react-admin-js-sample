@@ -1,0 +1,59 @@
+// Authenticated by default
+const authProvider = {
+  login: ({ username, password }) => {
+    if (username === "login" && password === "password") {
+      localStorage.removeItem("not_authenticated");
+      localStorage.removeItem("role");
+      localStorage.setItem("login", "login");
+      localStorage.setItem("user", "HogeHoge");
+      return Promise.resolve();
+    }
+    if (username === "user" && password === "password") {
+      localStorage.setItem("role", "user");
+      localStorage.removeItem("not_authenticated");
+      localStorage.setItem("login", "user");
+      localStorage.setItem("user", "HogeHoge");
+      return Promise.resolve();
+    }
+    if (username === "admin" && password === "password") {
+      localStorage.setItem("role", "admin");
+      localStorage.removeItem("not_authenticated");
+      localStorage.setItem("login", "admin");
+      localStorage.setItem("user", "HogeAdmin");
+      return Promise.resolve();
+    }
+    localStorage.setItem("not_authenticated", true);
+    return Promise.reject();
+  },
+  logout: () => {
+    localStorage.setItem("not_authenticated", true);
+    localStorage.removeItem("role");
+    localStorage.removeItem("login");
+    localStorage.removeItem("user");
+    localStorage.removeItem("avatar");
+    return Promise.resolve();
+  },
+  checkError: ({ status }) => {
+    return status === 401 || status === 403
+      ? Promise.reject()
+      : Promise.resolve();
+  },
+  checkAuth: () => {
+    return localStorage.getItem("not_authenticated")
+      ? Promise.reject()
+      : Promise.resolve();
+  },
+  getPermissions: () => {
+    const role = localStorage.getItem("role");
+    return Promise.resolve(role);
+  },
+  getIdentity: () => {
+    return {
+      id: localStorage.getItem("login"),
+      fullName: localStorage.getItem("user"),
+      avatar: localStorage.getItem("avatar"),
+    };
+  },
+};
+
+export default authProvider;
