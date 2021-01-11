@@ -1,7 +1,9 @@
 import * as React from "react";
-import { Admin, Resource, Login } from "react-admin";
+import { Admin, Resource } from "react-admin";
+//import { Admin, Resource, Login } from "react-admin";
 
 import authProvider from "./authProvider";
+import MyLoginPage from "./MyLoginPage";
 
 import {
   InstanceList,
@@ -21,15 +23,15 @@ import dakeDataProvider from "./dataprovider/LocalDataProvider";
 
 import Dashboard from "./Dashboard";
 
-const CustomLogin = (props) => (
-  <Login {...props} backgroundImage="/fujisan.jpg" />
-);
+//const CustomLogin = (props) => (
+//  <Login {...props} backgroundImage="/fujisan.jpg" />
+//);
 
 const Component = () => (
   <Admin
     dashboard={Dashboard}
     dataProvider={dakeDataProvider}
-    loginPage={CustomLogin}
+    loginPage={MyLoginPage}
     authProvider={authProvider}
   >
     <Resource

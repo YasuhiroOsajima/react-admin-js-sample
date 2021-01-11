@@ -1,14 +1,15 @@
 // Authenticated by default
 const authProvider = {
-  login: ({ username }) => {
-    if (username === "user") {
+  login: ({ user }) => {
+    console.log(user);
+    if (user === "user") {
       localStorage.setItem("role", "user");
       localStorage.removeItem("not_authenticated");
       localStorage.setItem("login", "user");
       localStorage.setItem("user", "HogeHoge");
       return Promise.resolve();
     }
-    if (username === "admin") {
+    if (user === "admin") {
       localStorage.setItem("role", "admin");
       localStorage.removeItem("not_authenticated");
       localStorage.setItem("login", "admin");
